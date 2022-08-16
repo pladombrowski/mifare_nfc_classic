@@ -238,7 +238,10 @@ class MifareNfcClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 mifareClassic = MifareClassic.get(tag)
                 mifareClassic.connect()
                 val blockIndex = mifareClassic.sectorToBlock(sectorIndex) + 3
-                mifareClassic.authenticateSectorWithKeyA(sectorIndex, sectorPassword)
+                val isAuthenticated = mifareClassic.authenticateSectorWithKeyA(sectorIndex, sectorPassword)
+
+                Log.d("isAuthenticated: ", isAuthenticated.toString())
+
                 val toWrite = mifareClassic.readBlock(blockIndex)
                 val decList: ArrayList<Int> = arrayListOf()
                 for (i in newPassword.indices step 2) {
@@ -250,6 +253,9 @@ class MifareNfcClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     toWrite[i] = decList[i].toByte()
                     toWrite[10 + i] = decList[i].toByte()
                 }
+
+                Log.d("toWriteChangePassword: ", toWrite.toString())
+
                 mifareClassic.writeBlock(
                         blockIndex,
                         toWrite
