@@ -20,7 +20,7 @@ class MifareNfcClassic {
     return response as String?;
   }
 
-  static Future<void> writeBlock({
+  static Future<bool> writeBlock({
     required int? blockIndex,
     required String? message,
     String? password,
@@ -31,6 +31,8 @@ class MifareNfcClassic {
       'password': password,
     });
     Logger().i(response);
+
+    return response;
   }
 
   static Future<Map<String, dynamic>> overwriteBlock({
@@ -47,7 +49,7 @@ class MifareNfcClassic {
     return Map<String, dynamic>.from(response);
   }
 
-  static Future<void> changePasswordOfSector({
+  static Future<bool> changePasswordOfSector({
     int? sectorIndex,
     String? newPassword,
     String? password,
@@ -58,6 +60,8 @@ class MifareNfcClassic {
       'password': password
     });
     Logger().i(response);
+
+    return response;
   }
 
   static Future<void> writeRawHexToBlock({
